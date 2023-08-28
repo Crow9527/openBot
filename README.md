@@ -10,8 +10,6 @@
 #### 安装教程
 
 1.  下载OPQ,OPQ具体启动方式请参考项目 [文档](https://73s2swxb4k.apifox.cn/)
-2.  xxxx
-3.  xxxx
 
 #### 使用说明
 
