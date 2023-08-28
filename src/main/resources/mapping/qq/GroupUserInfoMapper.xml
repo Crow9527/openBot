@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crow.qqbot.mapper.qq.GroupUserInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.crow.qqbot.mode.bean.qq.GroupUserInfo">
+        <id column="id" property="id" />
+        <result column="uid" property="uid" />
+        <result column="uin" property="uin" />
+        <result column="nick_name" property="nickName" />
+        <result column="group_uin" property="groupUin" />
+        <result column="sex" property="sex" />
+        <result column="join_time" property="joinTime" />
+        <result column="last_speak_time" property="lastSpeakTime" />
+        <result column="level" property="level" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, uid, uin, nick_name, group_uin, sex, join_time, last_speak_time, level
+    </sql>
+
+</mapper>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<title>404</title>
+</head>
+<title>微博热点</title>
+<style>
+body {
+	font-family: "猫啃忘形圆";
+	background-color: #F0E2D5;
+}
+
+h1 {
+	text-align: center;
+	color: #333;
+}
+
+.hot-topics {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.hot-topic {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+	padding: 20px;
+	margin-bottom: 20px;
+	width: 300px;
+}
+
+.hot-topic h2 {
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+
+.hot-topic p {
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+
+.hot-topic .heat {
+	color: #e74c3c;
+	font-size: 15px;
+	float: right;
+}
+
+.hot-topic .list:nth-child(1) .decimal {
+	background: #f1404b;
+	color: #fff;
+}
+
+.hot-topic .list:nth-child(2) .decimal {
+	background: #c56831;
+	color: #fff;
+}
+
+.hot-topic .list:nth-child(3) .decimal {
+	background: #b89e2c;
+	color: #fff;
+}
+
+.hot-topic .decimal {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	background: rgba(124, 124, 124, .3);
+	text-align: center;
+	border-radius: 4px;
+	margin-right: 0.8em;
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	background: rgba(124, 124, 124, .3);
+	text-align: center;
+	border-radius: 4px;
+	margin-right: 0.8em;
+}
+
+/* 自定义不同热度的颜色 */
+.hot-topic.low {
+	background-color: #eaf7f7;
+}
+
+.hot-topic.medium {
+	background-color: #f8f4ea;
+}
+
+.hot-topic.high {
+	background-color: #f7e9ea;
+}
+</style>
+<body>
+	<h1>${hotName}热点</h1>
+	<div class="hot-topics">
+		<div class="hot-topic low">
+			<#list hots as u>
+			<h2 class="list">
+				<span class="decimal">${u.index}</span>${u.title}<span class="heat">&nbsp;${u.hotValue}</span>
+			</h2>
+			</#list>
+		</div>
+	</div>
+	<footer style="text-align: center; height: 30px">
+		<p>&copy; Power By 乌鸦</p>
+	</footer>
+</body>
+</html>
+

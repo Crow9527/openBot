@@ -1,0 +1,19 @@
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 120vh;
+  max-width: 120vmin;
+  max-height: 120vmin;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -40%);
+          transform: translate(-50%, -40%);
+}
+
+.particles-js-canvas-el {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  bottom: 100%;
+  right: 100%;
+}

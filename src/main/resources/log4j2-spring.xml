@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+	<appenders>
+
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--只接受程序中DEBUG级别的日志进行处理 -->
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [qqbot] %-5level %class{36} %L %M - %msg%xEx%n" />
+		</Console>
+
+		<!--处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中 -->
+		<!--打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingFile name="RollingFileDebug"
+			fileName="./logs/debug.log"
+			filePattern="logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz">
+			<Filters>
+				<ThresholdFilter level="DEBUG" />
+				<ThresholdFilter level="INFO" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss}] [qqbot] %-5level %class{36} %L %M - %msg%xEx%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+		<!--处理INFO级别的日志，并把该日志放到logs/info.log文件中 -->
+		<RollingFile name="RollingFileInfo"
+			fileName="./logs/info.log"
+			filePattern="logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz">
+			<Filters>
+				<!--只接受INFO级别的日志，其余的全部拒绝处理 -->
+				<ThresholdFilter level="INFO" />
+				<ThresholdFilter level="WARN" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss}] [qqbot] %-5level %class{36} %L %M - %msg%xEx%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+		<!--处理WARN级别的日志，并把该日志放到logs/warn.log文件中 -->
+		<RollingFile name="RollingFileWarn"
+			fileName="./logs/warn.log"
+			filePattern="logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz">
+			<Filters>
+				<ThresholdFilter level="WARN" />
+				<ThresholdFilter level="ERROR" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss}] [qqbot] %-5level %class{36} %L %M - %msg%xEx%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+		<!--处理error级别的日志，并把该日志放到logs/error.log文件中 -->
+		<RollingFile name="RollingFileError"
+			fileName="./logs/error.log"
+			filePattern="logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz">
+			<ThresholdFilter level="ERROR" />
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss}] [qqbot] %-5level %class{36} %L %M - %msg%xEx%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+		<!--druid的日志记录追加器 -->
+		<RollingFile name="druidSqlRollingFile"
+			fileName="./logs/druid-sql.log"
+			filePattern="logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss}] [qqbot] %-5level %L %M - %msg%xEx%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+
+
+	</appenders>
+	<loggers>
+		<!-- 打印日志异步输出 -->
+		<asyncRoot level="DEBUG" includeLocation="true"
+			additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="RollingFileInfo" />
+			<appender-ref ref="RollingFileWarn" />
+			<appender-ref ref="RollingFileError" />
+			<appender-ref ref="RollingFileDebug" />
+		</asyncRoot>
+
+		<!-- 保存日志异步输出 -->
+		<asyncLogger level="DEBUG" name="AsyncLogger"
+			includeLocation="true" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="RollingFileInfo" />
+			<appender-ref ref="RollingFileWarn" />
+			<appender-ref ref="RollingFileError" />
+			<appender-ref ref="RollingFileDebug" />
+		</asyncLogger>
+
+
+		<!-- 过滤日志 -->
+		<asyncLogger name="org.springframework" level="INFO"></asyncLogger>
+		<asyncLogger name="org.apache.ibatis" level="INFO"></asyncLogger>
+		<asyncLogger name="org.mybatis" level="INFO"></asyncLogger>
+		<asyncLogger name="com.alibaba.druid" level="INFO"></asyncLogger>
+		<asyncLogger name="io.lettuce.core" level="INFO"></asyncLogger>
+
+
+		<!--记录druid-sql的记录 -->
+		<asyncLogger name="druid.sql.Statement" level="INFO"
+			additivity="false">
+			<appender-ref ref="druidSqlRollingFile" />
+		</asyncLogger>
+
+		<!--log4j2 自带过滤日志 -->
+		<asyncLogger name="org.apache.catalina.startup.DigesterFactory"
+			level="error" />
+		<asyncLogger name="org.apache.catalina.util.LifecycleBase"
+			level="error" />
+		<asyncLogger name="org.apache.coyote.http11.Http11NioProtocol"
+			level="warn" />
+		<asyncLogger name="org.apache.sshd.common.util.SecurityUtils"
+			level="warn" />
+		<asyncLogger name="org.apache.tomcat.util.net.NioSelectorPool"
+			level="warn" />
+		<asyncLogger name="org.crsh.plugin" level="warn" />
+		<asyncLogger name="org.crsh.ssh" level="warn" />
+		<asyncLogger
+			name="org.eclipse.jetty.util.component.AbstractLifeCycle"
+			level="error" />
+		<asyncLogger name="org.hibernate.validator.internal.util.Version"
+			level="warn" />
+		<asyncLogger
+			name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration"
+			level="warn" />
+		<asyncLogger name="org.springframework.boot.actuate.endpoint.jmx"
+			level="warn" />
+		<asyncLogger name="org.thymeleaf" level="warn" />
+
+	</loggers>
+</configuration>

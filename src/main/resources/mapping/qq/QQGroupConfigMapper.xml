@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.qqbot.house.mapper.chat.QQGroupConfigMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.crow.qqbot.mode.bean.qq.QQGroupConfig">
+		<id column="id" property="id" />
+		<result column="group_uin" property="groupUin" />
+		<result column="status" property="status" />
+		<result column="r18" property="r18" />
+		<result column="gpt" property="gpt" />
+		<result column="admin" property="admin" />
+		<result column="rotate" property="rotate" />
+		<result column="notes" property="notes" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, group_uin, status, r18, gpt, admin, rotate, notes
+	</sql>
+
+</mapper>
